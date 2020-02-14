@@ -9,7 +9,6 @@ const PATHS = {
   dist: path.join(__dirname, "../public"),
   assets: "assets/"
 };
-console.log('PATHS', PATHS)
 
 // Pages const for HtmlWebpackPlugin
 const PAGES_DIR = PATHS.src;
