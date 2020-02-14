@@ -3,6 +3,7 @@ const fs = require("fs");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ImageminWebpWebpackPlugin= require("imagemin-webp-webpack-plugin");
 
 const PATHS = {
   src: path.join(__dirname, "../src"),
@@ -28,18 +29,6 @@ module.exports = {
     path: PATHS.dist,
     publicPath: "/"
   },
-  // optimization: {
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       vendor: {
-  //         name: "vendors",
-  //         test: /node_modules/,
-  //         chunks: "all",
-  //         enforce: true
-  //       }
-  //     }
-  //   }
-  // },
   module: {
     rules: [
       {
@@ -100,6 +89,20 @@ module.exports = {
       { from: `${PATHS.src}/${PATHS.assets}img`, to: `${PATHS.assets}img` },
       { from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts` },
       { from: `${PATHS.src}/static`, to: "" }
+    ]),
+    new ImageminWebpWebpackPlugin([
+      {
+        config: [{
+          test: /\.(jpe?g|png)/,
+          options: {
+            quality:  90
+          }
+        }],
+        overrideExtension: true,
+        detailedLogs: false,
+        silent: false,
+        strict: true
+      }
     ]),
 
     ...PAGES.map(
